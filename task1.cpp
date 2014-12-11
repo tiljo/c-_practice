@@ -1,4 +1,5 @@
 #include<iostream>
+#include <stdio.h>
 #include<cstring>
 #include<cctype>
 #include<cstdlib>
@@ -21,28 +22,26 @@ class mystring{
 			strcpy(strng,o.strng);
 		}
 
-		void search(const mystring x){
+		int search(const mystring x){
 			int i,n,t;
 			n= strlen(x.strng);
 			char tmp[10];
-		//	cout<<"<<n is"<<n<<endl;
 
 			for(i=0; strng[i]!=0 ;i++){
 				strncpy(tmp,strng+i,n);
 				
 				tmp[n]=0;
 				t=strlen(tmp);
-				//cout<<"t is.."<<t<<endl;
 
-				
-				//cout<<"tmp>>>"<<tmp<<endl;
 				if(t!=n)
 					break;
 				if(strcmp(tmp,x.strng)==0){
 					cout<<"similar strings..found at "<< i <<endl;
+					return i;
 				}
 			}
 			cout<< "SEARCH COMPLETED"<< endl;
+			return -1;
 		}
 
 		
@@ -71,10 +70,27 @@ class mystring{
 			strng[i]=0;
 		}
 
+		int msplit(char *x,mystring result[10]){
+			char* token;
+			char t[10];
+			int i=0;
 
+			char tmp[10];//store the string to split in tmp
+			strcpy(tmp,strng);
+			token = strtok(tmp,x);
+			while(token!=NULL){
+				strcpy(t,token);
+				result[i].stringcopy(t);i++;
+				token = strtok(NULL,x);
+			}
+
+			return i;
+
+		}
 
 		void printstring(){
 			cout<< strng<<endl;
+			cout<<endl;
 		}
 
 		void stringcat(char* x){
@@ -95,34 +111,51 @@ class mystring{
 		
 };
 
-int main(){
-	mystring a;
-	char n[]="tiljot";
-	char o[]="iljotr";
+int main(int argc, char *argv[]){
+/*	mystring a;
+	int i,r,splitcount;
+	char n[]="abyzfgyzrt";
+	char o[]="ab";
+	char del[]="yz";
+	mystring result[5];
 	a.stringcopy(n);
+	splitcount = a.msplit(del,result);
+	a.printstring();
+
+	for(i=0; i<splitcount ; i++){
+		result[i].printstring();
+	}
 
 	mystring t2;
 	t2.stringcopy(o);
 
-	//t2 = a;
-	a.search(t2);
-
-	/*mystring t3;
-	t3 = a+t2;
-	t3.stringcopy(o);
-	a.search(t3);
-	cout<< "---->searched in a"<<endl;
-	cout<< "t3 is..."<<endl;
-
-	t3.printstring();
-	cout<< "t2 is..."<< endl;
+	r = a.search(t2);
+	a.printstring();
 	t2.printstring();
-	t2.stringcopy(o);
+	cout<<"........."<<r<<endl;
+
+	mystring t3;
+	t3 = a+t2;
+	cout<<"t3 is..."<<endl;
+	t3.printstring();
+
+	cout<< "t2 is..."<< endl;
 	t2.printstring();
 	a.getLength();
 	a.printstring();
 	a.toUpper();
-	a.printstring();*/
-
+	a.printstring();
+*/
+	mystring data, pattern;
+	data.stringcopy(argv[1]);
+	pattern.stringcopy(argv[2]);
+	int pos = data.search(pattern);
+	printf("pos: %d\n", pos ) ;
+	
+	mystring result[5];
+	int splitcount = data.msplit(argv[2],result);
+	for (int i = 0 ; i < splitcount ; i++ ) {
+		result[i].printstring();	
+	} 
 	return 0;
 }
