@@ -6,7 +6,8 @@
 using namespace std;
 
 class mystring{
-	char* strng;
+	private:
+		char* strng;
 	public:
 		mystring(){
 			strng = (char*)malloc(10*sizeof(char));
@@ -112,7 +113,7 @@ class mystring{
 };
 
 int main(int argc, char *argv[]){
-/*	mystring a;
+	mystring a;
 	int i,r,splitcount;
 	char n[]="abyzfgyzrt";
 	char o[]="ab";
@@ -145,7 +146,7 @@ int main(int argc, char *argv[]){
 	a.printstring();
 	a.toUpper();
 	a.printstring();
-*/
+/*
 	mystring data, pattern;
 	data.stringcopy(argv[1]);
 	pattern.stringcopy(argv[2]);
@@ -156,6 +157,6 @@ int main(int argc, char *argv[]){
 	int splitcount = data.msplit(argv[2],result);
 	for (int i = 0 ; i < splitcount ; i++ ) {
 		result[i].printstring();	
-	} 
+	}*/
 	return 0;
 }
