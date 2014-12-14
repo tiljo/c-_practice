@@ -8,30 +8,30 @@ using namespace std;
 
 class mystring{
 	private:
-		char* strng;
+		char* str_ptr;
 	public:
 		mystring(){
-			strng = (char*)malloc(2*sizeof(char));
-			printf("malloced...%p\n",strng);
-			strcpy(strng,"d");
+			str_ptr = (char*)malloc(2*sizeof(char));
+			printf("malloced...%p\n",str_ptr);
+			strcpy(str_ptr,"d");
 		}
 		~mystring(){
-			printf("deleting..%p\n",strng);
-			free(strng);
+			printf("deleting..%p\n",str_ptr);
+			free(str_ptr);
 		}
 
 		mystring(const mystring &o){
-			int size = strlen(o.strng);
-			strng = (char*)malloc((size+1)*sizeof(char));
-			printf("malloced...in 1 arg..%p\n",strng);
-			strcpy(strng,o.strng);
+			int size = strlen(o.str_ptr);
+			str_ptr = (char*)malloc((size+1)*sizeof(char));
+			printf("malloced...in 1 arg..%p\n",str_ptr);
+			strcpy(str_ptr,o.str_ptr);
 		}
 
 		int search(const mystring& x){
 
 			char* r=NULL;
-			if((r=strstr(strng,x.strng))!=NULL){
-				return r-strng;
+			if((r=strstr(str_ptr,x.str_ptr))!=NULL){
+				return r-str_ptr;
 			}
 			else{
 				cout<< "SEARCH COMPLETED"<< endl;
@@ -43,45 +43,45 @@ class mystring{
 		void stringcopy(char* x){
 			int size = strlen(x);
 			assert(size>0);
-			assert(strng!=NULL);
-			if((strng = (char*)realloc(strng,size+1))==NULL){
+			assert(str_ptr!=NULL);
+			if((str_ptr = (char*)realloc(str_ptr,size+1))==NULL){
 				perror("realloc");
 				exit(1);
 			}
-			printf("in strcp: reallocd.....%p	\n",strng);
-			strcpy(strng,x);
+			printf("in strcp: reallocd.....%p	\n",str_ptr);
+			strcpy(str_ptr,x);
 
 		}
 
 		int getLength(){
-			return(strlen(strng));
+			return(strlen(str_ptr));
 		}
 
 		void toLower(){
 			unsigned int i;
-			for(i=0; i<strlen(strng);i++){
-				strng[i] = tolower(strng[i]);
+			for(i=0; i<strlen(str_ptr);i++){
+				str_ptr[i] = tolower(str_ptr[i]);
 			}
-			strng[i]=0;
+			str_ptr[i]=0;
 		}
 
 
 		void toUpper(){
 			unsigned int i;
-			for(i=0; i<strlen(strng);i++){
-				strng[i] = toupper(strng[i]);
+			for(i=0; i<strlen(str_ptr);i++){
+				str_ptr[i] = toupper(str_ptr[i]);
 			}
-			strng[i]=0;
+			str_ptr[i]=0;
 		}
 
 		int msplit(char *x,mystring* result){
 
 			int i=0,n,k;
-			n = strlen(strng);
+			n = strlen(str_ptr);
 			char* a = (char*)malloc(n*sizeof(char));
 
 			printf("malloced...in msplt tmp a,...%p\n",a);
-			strcpy(a,strng);
+			strcpy(a,str_ptr);
 
 			char* r = NULL;
 			n=strlen(x);
@@ -121,12 +121,12 @@ class mystring{
 		int countsplit(char *x){
 
 			int i=0,n;
-			n = strlen(strng);
+			n = strlen(str_ptr);
 			char* a = (char*)malloc(n*sizeof(char));
 
 			printf("malloc countsplit  a,...%p\n",a);
 
-			strcpy(a,strng);
+			strcpy(a,str_ptr);
 
 			char* r = NULL;
 			n=strlen(x);
@@ -151,31 +151,31 @@ class mystring{
 
 
 		void printstring(){
-			cout<< strng<<endl;
+			cout<< str_ptr<<endl;
 			cout<<endl;
 		}
 
 		void stringcat(char* x){
-			int parentsize = strlen(strng);
+			int parentsize = strlen(str_ptr);
 			int catsize = strlen(x);
-			strng = (char*)realloc(strng,parentsize + catsize+2);
+			str_ptr = (char*)realloc(str_ptr,parentsize + catsize+2);
 
-			printf("in strcat:  realloc strng,...%p\n",strng);
-			strcat(strng,x);
+			printf("in strcat:  realloc str_ptr,...%p\n",str_ptr);
+			strcat(str_ptr,x);
 		}
 
 		void operator=(const mystring &x){
 
-			strng = (char*)realloc(strng,(strlen(x.strng)+1));
+			str_ptr = (char*)realloc(str_ptr,(strlen(x.str_ptr)+1));
 		
-			printf("realloc strng in =,...%p\n",strng);
-			strcpy(strng,x.strng);
+			printf("realloc str_ptr in =,...%p\n",str_ptr);
+			strcpy(str_ptr,x.str_ptr);
 		}
 
 		mystring operator+(const mystring &x){
 			mystring temp;
-			temp.stringcopy(this->strng);
-			temp.stringcat(x.strng);
+			temp.stringcopy(this->str_ptr);
+			temp.stringcat(x.str_ptr);
 			return temp;
 		}
 
