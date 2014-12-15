@@ -1,29 +1,26 @@
 
-		mystring::mystring(){
+		mystring::mystring(){//constructor
 			if((str_ptr = (char*)malloc(2*sizeof(char)))==NULL){
 				perror("malloc");
 				exit(1);
 			}
-		//	printf("malloced...%p\n",str_ptr);
 			strcpy(str_ptr,"d");
 		}
 
-		mystring::~mystring(){
-		//	printf("deleting..%p\n",str_ptr);
+		mystring::~mystring(){//destructor
 			free(str_ptr);
 		}
 
-		mystring::mystring(const mystring &o){
+		mystring::mystring(const mystring &o){//custom cunstructor
 			int size = strlen(o.str_ptr);
 			if((str_ptr = (char*)malloc((size+1)*sizeof(char)))==NULL){
 				perror("malloc");
 				exit(1);
 			}
-		//	printf("malloced....%p\n",str_ptr);
 			strcpy(str_ptr,o.str_ptr);
 		}
 
-		int mystring::search(const mystring& x){
+		int mystring::search(const mystring& x){//method to search for pattern
 			char* r=NULL;
 			if((r=strstr(str_ptr,x.str_ptr))!=NULL){
 				return r-str_ptr;
@@ -40,13 +37,12 @@
 			assert(size>0);
 			assert(str_ptr!=NULL);
 			char* tmp = NULL;
-			if(( tmp = (char*)realloc(str_ptr,(size+1)*sizeof(char)))==NULL){
+			if(( tmp = (char*)realloc(str_ptr,(size+1)*sizeof(char)))==NULL){//error checking for realloc
 				perror("realloc");
 				free(str_ptr);
 				exit(1);
 			}
 			str_ptr = tmp;
-		//	printf("in strcp: reallocd.....%p	\n",str_ptr);
 			strcpy(str_ptr,x);
 
 		}
@@ -75,13 +71,12 @@
 		int mystring::msplit(char *x,mystring* result){
 			int i=0,n,k;
 			n = strlen(str_ptr);
-			char *a=NULL;
+			char *a=NULL;//a is a temporay char pointer , used to protect original str_ptr
 			if((a = (char*)malloc(n*sizeof(char)))==NULL){
 				perror("malloc");
 				exit(1);
 			}
 
-		//	printf("malloced...in msplt for a,...%p\n",a);
 			strcpy(a,str_ptr);
 
 			char* r = NULL;
@@ -89,12 +84,11 @@
 			while(strcmp(a,"")!=0){
 				if(	(r = strstr(a,x))!=NULL){
 					k = r-a;
-					char* res=NULL;
+					char* res=NULL;//"res" temporarly stores the splitted word
 					if((res = (char*)malloc((k+1)*sizeof(char)))==NULL){
 						perror("malloc");
 						exit(1);
 					}
-		//			printf("malloced for res,...%p\n",res);
 					strncpy(res,a,k);
 					res[k]=0;
 					if(res[0]!=0){
@@ -102,55 +96,43 @@
 					result[i].stringcopy(res);
 					i++;
 					}
-					strcpy(a, r+n);
+					strcpy(a, r+n);//updating a , after splitting
 
-		//			printf("freeing res..,...%p\n",res);
 					free(res);
 				}
-				else{
+				else{//when no match found, last word stored as instance
 						result[i].stringcopy(a);
 						i++;
 				   		break;
 				}
-
 			}
-
-		//	printf("freeing  a,...%p\n",a);
 			free(a);
-
 			return i;
 		}
 
 
-		int mystring::countsplit(char *x){
+		int mystring::countsplit(char *x){//this method calculate no.of instance to be formed after splitting
 			int i=0,n;
 			n = strlen(str_ptr);
 			char* a = NULL;
-			if(( a = (char*)malloc(n*sizeof(char)))==NULL){
+			if(( a = (char*)malloc(n*sizeof(char)))==NULL){//str_ptr stored into temporary variable "a"
 				perror("malloc");
 				exit(1);
 			}
-
-		//	printf("malloc in countsplit  a,...%p\n",a);
-
 			strcpy(a,str_ptr);
-
 			char* r = NULL;
 			n=strlen(x);
 			while(a[0]!=0){
 				if(	(r = strstr(a,x))!=NULL){
-					if(a!=r)	i++;
+					if(a!=r)	i++;//ia a==r neglect the unsplitted word
 				strcpy(a, r+n);
 				}
-				else{
+				else{//count the last word
 						i++;
 				   		break;
 				}
 			}
-			
-		//	printf("freeing in cntsplit  a,...%p\n",a);
 			free(a);
-
 			return i;
 		}
 
@@ -167,8 +149,6 @@
 				perror("realloc");
 				exit(1);
 			}
-
-		//	printf("in strcat:  realloc str_ptr,...%p\n",str_ptr);
 			strcat(str_ptr,x);
 		}
 
@@ -177,7 +157,6 @@
 				perror("realloc");
 				exit(1);
 			}
-		//	printf("realloc str_ptr in =,...%p\n",str_ptr);
 			strcpy(str_ptr,x.str_ptr);
 		}
 
